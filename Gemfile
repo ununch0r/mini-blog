@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'bootstrap', '~> 4.4.1'
+gem 'carrierwave', '~> 2.0'
+gem "mini_magick"
 
 gem 'jquery-rails'
 
