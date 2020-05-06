@@ -10,6 +10,7 @@ require("channels")
 require("bootstrap-sprokets")
 require("popper")
 require("jquery3")
+require ("carrierwave/orm/activerecord")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
