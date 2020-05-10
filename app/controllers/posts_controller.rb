@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -18,7 +19,8 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to @post, success: 'Post has been created successfully!'
     else
-      render :new, danger: "Post hasn't been created."
+      flash.now[:danger] = "Post hasn't been created."
+      render :new
     end
   end
 
@@ -29,7 +31,8 @@ class PostsController < ApplicationController
     if @post.update_attributes(post_params)
       redirect_to @post, success: 'Post has been updated successfully!'
     else
-      render :edit, danger: "Post hasn't been updated."
+      flash.now[:danger] = "Post hasn't been created."
+      render :edit
     end
   end
 

@@ -13,14 +13,32 @@
     <div class ="container">
       <nav class="navbar navbar-inverse" style="background-color: #e3f2fd;">
           <ul class="nav"">
+            <li class="nav-item">
+              <a class = 'nav-link' style = 'font-weight:bold'>My own blog</a>
+            </li>
             <li class="nav-item active">
               <a class="nav-link" href="<%= posts_path%>">Posts</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+            <li class="nav-item active">
+              <% if user_signed_in? %>
+              <%= link_to 'New post', new_post_path, class: 'nav-link' %>
+              <% end %>
             </li>
           </ul>
-          <%= link_to 'New post', new_post_path, class: 'btn btn-outline-primary pull-xs-right' %>
+          <ul class="nav">
+            <%  if user_signed_in? %>
+            <li class="nav-item active">
+              <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link'%>
+            </li>
+            <% else %>
+            <li class="nav-item active">
+              <%= link_to 'Login', new_user_session_path, class: 'nav-link'%>
+            </li>
+            <li class="nav-item">
+                <%= link_to 'Registration', new_user_registration_path, class: 'nav-link'%>
+            </li>
+            <% end %>
+          </ul>
       </nav>
     </div>
 
@@ -28,21 +46,21 @@
       <div class="row">
         <div class="col-md-12">
           <% flash.each do |name, message| %>
-            <div class="alert alert-<%= name %>">
+            <div class="alert <%= bootstrap_class_for(name) %>">
               <%= message %>
             </div>
           <% end %>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-8">
           <%= yield %>
         </div>
         <div class="col-md-4">
-          <% tag_cloud(Tag.counts, %{tag1 tag2 tag3 tag4 tag5}) do |tag, css_class| %>
-            <%= link_to tag.name, tag_path(tag.name), class: css_class %>
-          <% end %>
+          <h2>Tags</h2>
+           <% tag_cloud(Tag.counts, %w{tag1 tag2 tag3 tag4 tag5}) do |tag, css_class| %>
+             <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+           <% end %>
         </div>
       </div>
     </div>
